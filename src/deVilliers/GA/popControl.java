@@ -41,8 +41,10 @@ public class popControl {
         Collections.sort(population, new sortY());
         ArrayList<Pair<Integer, Integer>> breedingPairs = new ArrayList<>();
         Randomness r = new Randomness();
-        Integer Half = population.size()/2;
-        for (int i = 0; i <= Half; i++)
+        Integer Half = (population.size()-1)/2;
+        Pair<Integer, Integer> cur1 = Pair.create(0, 0);
+        breedingPairs.add(cur1);
+        for (int i = 1; i <= Half; i++)
         {
             Pair<Integer, Integer> cur = Pair.create(i, r.UniformPositiveRandomInteger(Half*1.0));
             breedingPairs.add(cur);
@@ -53,10 +55,14 @@ public class popControl {
     public ArrayList<Life> Breed(ArrayList<Pair<Integer, Integer>> breedingpairs)
     {
         ArrayList<Life> temp = new ArrayList<>();
-        for (Pair<Integer, Integer> pair : breedingpairs)
+        Life c = population.get(breedingpairs.get(0).getFirst());
+        Life cc = population.get(breedingpairs.get(0).getSecond());
+        Life ccc = createClone(c, cc);
+        temp.add(ccc);
+        for (int i = 1; i <= breedingpairs.size() - 1; i++)
         {
-            Life A = population.get(pair.getFirst());
-            Life B = population.get(pair.getSecond());
+            Life A = population.get(breedingpairs.get(i).getFirst());
+            Life B = population.get(breedingpairs.get(i).getSecond());
             Life cur = createLife(A, B);
             cur.y = f.evaluate(cur.X);
             temp.add(cur);
@@ -141,7 +147,27 @@ public class popControl {
             return dl;
         }
     }
-
+    public Life createClone(Life A, Life B)
+    {
+        ArrayList<Double> temp = new ArrayList<>();
+        for (int j = 0; j <= A.X.size()-1; j++)
+        {
+            temp.add(0.0);
+        }
+        if (A.X.size() == B.X.size()) {
+            for (int i = 0; i <= A.X.size() - 1; i++) {
+                temp.set(i, A.X.get(i));
+            }
+            return new Life(temp, f.evaluate(temp));
+        }
+        else
+        {
+            Double d = Collections.max(A.X);
+            Life dl = new Life(A.X.size(), d);
+            dl.y = f.evaluate(dl.X);
+            return dl;
+        }
+    }
 }
 class sortY implements Comparator<Life>
 {
