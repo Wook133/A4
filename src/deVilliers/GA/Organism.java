@@ -22,7 +22,7 @@ public class Organism {
     public String toString() {
         return "Organism{" +
                 ", y=" + y +
-                "X=" + X +
+                ", X=" + X +
                 ", range=" + range +
                 '}';
     }
@@ -44,10 +44,41 @@ public class Organism {
         this.f = cf;
     }
 
+    public Organism(ArrayList<Double> d, Double Range, ContinuousFunction cf)
+    {
+        X = new ArrayList<>();
+        X.addAll(d);
+
+        y = cf.evaluate(X);
+        this.range = Range;
+        this.f = cf;
+    }
+
+    public void setX(ArrayList<Double> x) {
+        X = x;
+    }
+
+    public Double getRange() {
+        return range;
+    }
+
+    public void setRange(Double range) {
+        this.range = range;
+    }
+
+    public ContinuousFunction getF() {
+        return f;
+    }
+
+    public void setF(ContinuousFunction f) {
+        this.f = f;
+    }
+
     public Organism(ArrayList<Double> x) {
         X = x;
         y = f.evaluate(X);
     }
+
 
     public Integer getDimension()
     {
