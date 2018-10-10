@@ -1,9 +1,6 @@
 package deVilliers.GA;
 
-import functions.Ackley;
-import functions.ContinuousFunction;
-import functions.Griewank;
-import functions.Rosenbrock;
+import functions.*;
 
 import java.util.Random;
 
@@ -13,7 +10,7 @@ public class gaRunner {
         Random r = new Random();
         ContinuousFunction f = new Griewank();
         //popControl ga1 = new popControl(600.0, new Whitley(), 1000, 0.5, 0.8, 100000, 30);
-        popControl ga1 = new popControl(10.0, new Ackley(), 1000, 0.5, 0.8, 100, 30);
+        popControl ga1 = new popControl(100.0, new Whitley(), 1000, 0.5, 0.8, 100, 30);
         ga1.InitializePopulation();
         ga1.Evolve();
 
