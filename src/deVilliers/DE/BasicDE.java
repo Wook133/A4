@@ -8,10 +8,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.apache.commons.math3.util.Pair;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class BasicDE {
     ArrayList<Pair<ArrayList<Double>, Double>> population = new ArrayList<>();
@@ -20,16 +17,16 @@ public class BasicDE {
     Integer PopulationSize, Generations, Dimensions;
     ContinuousFunction f;
 
-    public BasicDE( Double range, Double crossoverRate, Double mutationRate, Integer populationSize, Integer generations, Integer dimensions, ContinuousFunction cf, Double ScaleFactor) {
+    public BasicDE(Double range, ContinuousFunction cf, Integer populationsize, Double cr, Double mr, Integer generations, Integer dimensions, Double sf) {
         this.population = new ArrayList<>();
         //this.population.addAll(new ArrayList<>(dimensions));
         Range = range;
-        this.crossoverRate = crossoverRate;
-        MutationRate = mutationRate;
-        PopulationSize = populationSize;
+        this.crossoverRate = cr;
+        MutationRate = mr;
+        PopulationSize = populationsize;
         Generations = generations;
         Dimensions = dimensions;
-        this.ScaleFactor = ScaleFactor;
+        this.ScaleFactor = sf;
         this.f = cf;
     }
 
@@ -72,6 +69,7 @@ public class BasicDE {
             Double mutantScalar = population.get(posVectors.get(0)).getFirst().get(i) + (ScaleFactor * (population.get(posVectors.get(1)).getFirst().get(i) - population.get(posVectors.get(2)).getFirst().get(i)));
             mutantVector.add(mutantScalar);
         }
+        //System.out.println("MV size = " + mutantVector.size());
         return mutantVector;
     }
 
@@ -81,7 +79,9 @@ public class BasicDE {
         Randomness rand = new Randomness();
         for (int j = 0; j <= Dimensions - 1; j++)
         {
+           // System.out.println(j);
             Double probability = rand.UniformPositiveRandomNumber(1.0);
+           // System.out.println("Probability = " + probability + " , " + crossoverRate);
             if (probability <= crossoverRate)
             {
                 Uij.add(mutantVector.get(j));
@@ -100,16 +100,50 @@ public class BasicDE {
         return f.evaluate(Vector);
     }
 
-    public void createTrialPopulation(Integer i)
+    public void createTrialPopulation()
     {
         trialpopulation = new ArrayList<>();
         for (int k = 0; k <= population.size() - 1; k++) {
             HashSet<Integer> uniqueVectorIndices = new HashSet<Integer>();
-            uniqueVectorIndices = Select3Vectors(i);
-
+            uniqueVectorIndices = Select3Vectors(k);
+            ArrayList<Double> curMutantVector = new ArrayList<>();
+            curMutantVector = createMutantVector(uniqueVectorIndices);
+            Pair<ArrayList<Double>, Double> TrialPair = createTrialVector(curMutantVector, population.get(k).getFirst());
+            sortDE comparer = new sortDE();
+            if (comparer.compare(TrialPair, population.get(k)) <= 0)
+            {
+                trialpopulation.add(TrialPair);
+            }
+            else
+            {
+                trialpopulation.add(population.get(k));
+            }
         }
+        /*population = new ArrayList<>();
+        for (Pair<ArrayList<Double>, Double> cur : trialpopulation)
+        {
+            population.add(cur);
+        }*/
+    }
 
-
+    public void differentialEvolve()
+    {
+        int igen =0;
+        while (igen <= Generations) {
+            Pair<ArrayList<Double>, Double> curMin = Collections.min(population, new sortDE());
+            Pair<ArrayList<Double>, Double> curMax = Collections.max(population, new sortDE());
+            System.out.println("Generation " + igen);
+            System.out.println("Size " + population.size());
+            System.out.println("Min : " + curMin.getSecond().toString());
+            System.out.println("Max : " + curMax.getSecond().toString());
+            createTrialPopulation();
+            population = new ArrayList<>();
+            for (Pair<ArrayList<Double>, Double> cur : trialpopulation)
+            {
+                population.add(cur);
+            }
+            igen = igen + 1;
+        }
     }
 
 
