@@ -7,18 +7,30 @@ import org.apache.commons.math3.random.UniformRandomGenerator;
 import org.apache.commons.math3.random.Well19937c;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 public class Main {
 
     public static void main(String[] args) {
+       /* HashSet<Integer> uniqueVectorIndices = new HashSet<Integer>();
+        Randomness r = new Randomness();
+        while(uniqueVectorIndices.size() <= 2)
+        {
+            Integer pos = r.UniformPositiveRandomInteger(4 *1.0);
+            System.out.println(pos);
+            uniqueVectorIndices.add(pos);
+        }
+        System.out.println("_____________________");
+        System.out.println(uniqueVectorIndices);*/
 
-        Random r = new Random();
+
+      /*  Random r = new Random();
         ContinuousFunction f = new Griewank();
-
-        popControl ga1 = new popControl(600.0, new Whitley(), 1000, 0.5, 0.8, 100000, 30);
+        //popControl ga1 = new popControl(600.0, new Whitley(), 1000, 0.5, 0.8, 100000, 30);
+        popControl ga1 = new popControl(10000.0000010, new Rosenbrock(), 1000, 0.5, 0.8, 100000, 30);
         ga1.InitializePopulation();
-        ga1.Evolve();
+        ga1.Evolve();*/
 
         /*ArrayList<Double> d = new ArrayList<>();
         for (int i = 0; i <= 30 -1; i++)
