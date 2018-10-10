@@ -46,12 +46,26 @@ public class BasicDE {
         }
     }
 
-    public HashSet<Integer> Select3Vectors(Integer i)
+    public HashSet<Integer> SelectVectors(Integer i, Integer numVectors)
     {
         HashSet<Integer> uniqueVectorIndices = new HashSet<Integer>();
         uniqueVectorIndices.add(i);
         Randomness r = new Randomness();
-        while(uniqueVectorIndices.size() <= 3)
+        while(uniqueVectorIndices.size() <= numVectors)
+        {
+            uniqueVectorIndices.add(r.UniformPositiveRandomInteger(PopulationSize *1.0));
+        }
+        //uniqueVectorIndices.remove(i);
+        return uniqueVectorIndices;
+    }
+    public HashSet<Integer> SelectVectorsWithBest(Integer numVectors)
+    {
+        HashSet<Integer> uniqueVectorIndices = new HashSet<Integer>();
+        Pair<ArrayList<Double>, Double> curMin = Collections.min(population, new sortDE());
+        int k = population.indexOf(curMin);
+        uniqueVectorIndices.add(k);
+        Randomness r = new Randomness();
+        while(uniqueVectorIndices.size() <= numVectors)
         {
             uniqueVectorIndices.add(r.UniformPositiveRandomInteger(PopulationSize *1.0));
         }
@@ -69,6 +83,43 @@ public class BasicDE {
             Double mutantScalar = population.get(posVectors.get(0)).getFirst().get(i) + (ScaleFactor * (population.get(posVectors.get(1)).getFirst().get(i) - population.get(posVectors.get(2)).getFirst().get(i)));
             mutantVector.add(mutantScalar);
         }
+        //System.out.println("MV size = " + mutantVector.size());
+        return mutantVector;
+    }
+
+
+    public ArrayList<Double> createGeneralMutantVector(HashSet<Integer> inVectorPos)
+    {
+        ArrayList<Double> mutantVector = new ArrayList<>();
+        ArrayList<Integer> posVectors = new ArrayList<>();
+        posVectors.addAll(inVectorPos);
+        Double mutantScalar = 0.0;
+        Double multiplicativeComponent = 0.0;
+        int k = 0;
+        for (int i = 0; i <= Dimensions - 1; i++)
+        {
+            for (int a = 0; a <= posVectors.size() - 3; a+=2)
+            {
+                if (a == 0)
+                {
+                    mutantScalar = population.get(posVectors.get(a)).getFirst().get(i);
+                }
+                else if (k == 0)
+                {
+                    multiplicativeComponent = multiplicativeComponent + population.get(posVectors.get(a + 1)).getFirst().get(i) + population.get(posVectors.get(a + 2)).getFirst().get(i);
+                    k = 1;
+                }
+                else
+                {
+                    multiplicativeComponent = multiplicativeComponent - population.get(posVectors.get(a + 1)).getFirst().get(i) - population.get(posVectors.get(a + 2)).getFirst().get(i);
+                    k = 0;
+                }
+            }
+            mutantScalar = mutantScalar + (ScaleFactor * multiplicativeComponent);
+            mutantVector.add(mutantScalar);
+        }
+
+        //multiplicativeComponent = multiplicativeComponent + (population.get(posVectors.get(k)).getFirst().get(i));
         //System.out.println("MV size = " + mutantVector.size());
         return mutantVector;
     }
@@ -105,7 +156,8 @@ public class BasicDE {
         trialpopulation = new ArrayList<>();
         for (int k = 0; k <= population.size() - 1; k++) {
             HashSet<Integer> uniqueVectorIndices = new HashSet<Integer>();
-            uniqueVectorIndices = Select3Vectors(k);
+            //uniqueVectorIndices = SelectVectorsWithBest(k, 3);
+            uniqueVectorIndices = SelectVectorsWithBest(3);
             ArrayList<Double> curMutantVector = new ArrayList<>();
             curMutantVector = createMutantVector(uniqueVectorIndices);
             Pair<ArrayList<Double>, Double> TrialPair = createTrialVector(curMutantVector, population.get(k).getFirst());
@@ -145,8 +197,6 @@ public class BasicDE {
             igen = igen + 1;
         }
     }
-
-
 
 
 }
