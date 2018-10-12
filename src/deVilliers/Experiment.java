@@ -5,10 +5,10 @@ import deVilliers.PSO.Agent;
 import java.util.ArrayList;
 
 public class Experiment {
-    ArrayList<Double> Xbest;
+   // ArrayList<Double> Xbest;
     Double ybest;
 
-    ArrayList<Double> XWorst;
+   // ArrayList<Double> XWorst;
     Double yworst;
 
     String Function;
@@ -18,10 +18,10 @@ public class Experiment {
     Integer Generation;
     Integer curGeneration;
 
-    public Experiment(ArrayList<Double> xbest, Double ybest, ArrayList<Double> XWorst, Double yworst, String function, String optimizationMethod, Integer popSize, Integer generation, Integer curGeneration) {
-        Xbest = xbest;
+    public Experiment(/*ArrayList<Double> xbest,*/ Double ybest,/* ArrayList<Double> XWorst,*/ Double yworst, String function, String optimizationMethod, Integer popSize, Integer generation, Integer curGeneration) {
+       // Xbest = xbest;
         this.ybest = ybest;
-        this.XWorst = XWorst;
+        //this.XWorst = XWorst;
         this.yworst = yworst;
         Function = function;
         OptimizationMethod = optimizationMethod;
@@ -32,9 +32,9 @@ public class Experiment {
 
     public String print()
     {
-        return "["+Xbest + "], " +
+        return //"["+Xbest + "], " +
                 ybest + ", " +
-                "["+XWorst + "], " +
+               // "["+XWorst + "], " +
                 yworst + ", " +
                 Function + ", " +
                 OptimizationMethod + ", " +
