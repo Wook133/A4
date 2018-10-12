@@ -1,7 +1,9 @@
 package deVilliers.GA;
 
+import deVilliers.GAexp;
 import deVilliers.Randomness;
-import functions.ContinuousFunction;
+import deVilliers.readCSV;
+import functions.*;
 import org.apache.commons.math3.util.Pair;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.Comparator;
 
 public class popControl {
     ArrayList<Life> population = new ArrayList<>();
+    String sfunction;
 
     Double Range, crossoverRate, MutationRate;
     Integer PopulationSize, Generations, Dimensions;
@@ -23,6 +26,18 @@ public class popControl {
         MutationRate = mr;
         Generations = generations;
         Dimensions = dimensions;
+
+
+    }
+    public popControl(Double range, ContinuousFunction cf, Integer populationsize, Double cr, Double mr, Integer generations, Integer dimensions, String s) {
+        Range = range;
+        f = cf;
+        PopulationSize = populationsize;
+        crossoverRate = cr;
+        MutationRate = mr;
+        Generations = generations;
+        Dimensions = dimensions;
+        sfunction = s;
     }
 
     public void InitializePopulation()
@@ -96,6 +111,45 @@ public class popControl {
             igen = igen + 1;
         }
     }
+    public void EvolvePrint(String sinput)
+    {
+        Collections.sort(population, new sortY());
+        int igen =0;
+        while (igen <= Generations)
+        {
+            readCSV rcsv = new readCSV();
+
+            Life curMin = Collections.min(population, new sortY());
+            Life curMax = Collections.max(population, new sortY());
+            System.out.println("Generation " + igen);
+            System.out.println("Size " + population.size());
+            System.out.println("Min : " + curMin.toString());
+            System.out.println("Max : " + curMax.toString());
+            ArrayList<Pair<Integer, Integer>> breeders = new ArrayList<>();
+            breeders = ElitistSelection();
+            ArrayList<Life> children = new ArrayList<>();
+            ArrayList<Life> children2 = new ArrayList<>();
+            children = Breed(breeders);
+            children2 = Breed(breeders);
+            population = new ArrayList<>();
+            population.addAll(children);
+            population.addAll(children2);
+            //breeders = selectBest10Percent();
+            //BreedToPop(breeders);
+            //(Double ybest, Double yworst, String function, String optimizationMethod, Integer popSize, Integer generation, Integer curGeneration, Double cr, Double mr)
+            try {
+                GAexp curEXP = new GAexp(curMin.y, curMax.y, sfunction, "Genetic Algorithm", population.size(), Generations, igen, crossoverRate, MutationRate);
+                rcsv.writeCsvFile(sinput, curEXP.print());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            igen = igen + 1;
+        }
+    }
+
+
 
 
     public Life createLife(Life A, Life B)

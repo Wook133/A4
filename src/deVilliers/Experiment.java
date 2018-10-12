@@ -1,10 +1,12 @@
 package deVilliers;
 
 import deVilliers.PSO.Agent;
+import functions.*;
 
 import java.util.ArrayList;
 
 public class Experiment {
+
    // ArrayList<Double> Xbest;
     Double ybest;
 
@@ -42,6 +44,7 @@ public class Experiment {
                 Generation + ", " +
                 curGeneration;
     }
+
 
 
 }
