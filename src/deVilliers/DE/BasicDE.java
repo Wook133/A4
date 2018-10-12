@@ -60,11 +60,19 @@ public class BasicDE {
     }
     public HashSet<Integer> SelectVectorsWithBest(Integer numVectors)
     {
-        HashSet<Integer> uniqueVectorIndices = new HashSet<Integer>();
-        Pair<ArrayList<Double>, Double> curMin = Collections.min(population, new sortDE());
-        int k = population.indexOf(curMin);
-        uniqueVectorIndices.add(k);
         Randomness r = new Randomness();
+        Double chance = r.UniformRandomNumber(1.0);
+        HashSet<Integer> uniqueVectorIndices = new HashSet<Integer>();
+        /**
+         * Uniform chance that the best one is used else 3 random
+         */
+        if (chance >= MutationRate) {
+            //System.out.println("Mutating");
+            Pair<ArrayList<Double>, Double> curMin = Collections.min(population, new sortDE());
+            int k = population.indexOf(curMin);
+            uniqueVectorIndices.add(k);
+        }
+
         while(uniqueVectorIndices.size() <= numVectors)
         {
             uniqueVectorIndices.add(r.UniformPositiveRandomInteger(PopulationSize *1.0));
