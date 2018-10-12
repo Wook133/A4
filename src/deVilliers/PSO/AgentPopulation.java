@@ -51,10 +51,10 @@ public class AgentPopulation {
             System.out.println("Generation's Best");
             System.out.println(curBest.curString());
             System.out.println(curBest.veloc());
-            Agent curWorst = Collections.max(population, new sortCurBest());
+           /* Agent curWorst = Collections.max(population, new sortCurBest());
             System.out.println("Generation's Worst");
             System.out.println(curWorst.curString());
-            System.out.println(curWorst.veloc());
+            System.out.println(curWorst.veloc());*/
             System.out.println("__________________________________");
         }
     }

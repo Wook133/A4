@@ -93,6 +93,7 @@ public class Agent {
         Velocity.clear();
         curX.addAll(updatedX);
         Velocity.addAll(newVelocity);
+        y=CF.evaluate(curX);
 
         Double curY = CF.evaluate(curX);
         if (curY <= CF.evaluate(pbX))
@@ -130,7 +131,7 @@ public class Agent {
 
     public String veloc() {
         return "Agent{" +
-                ", Velocity=" + Velocity +
+                "Velocity=" + Velocity +
                 '}';
     }
 }
