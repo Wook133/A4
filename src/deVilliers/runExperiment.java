@@ -11,7 +11,7 @@ public class runExperiment {
 
 
     public static void main(String[] args) {
-        RunGAExperiment("GAexperiment.csv");
+        //RunGAExperiment("GAexperiment.csv");
     }
 
 
@@ -34,6 +34,7 @@ public class runExperiment {
         functions.add("Whitley");
         readCSV rcsv = new readCSV();
 
+
         ArrayList<Double> ranges = new ArrayList<>();
         ranges.add(1.0);
         ranges.add(10.0);
@@ -42,14 +43,10 @@ public class runExperiment {
         for (int i = 0; i <= listFunctions.size() - 1; i++)
         {
             for (int j = 0; j <= ranges.size() - 1; j++) {
-                popControl ga1 = new popControl(ranges.get(j), listFunctions.get(i), 1000, 0.5, 0.8, 1000, 30, functions.get(i));
+                popControl ga1 = new popControl(ranges.get(j), listFunctions.get(i), 1000, 0.5, 0.8, 500, 30, functions.get(i));
                 ga1.InitializePopulation();
                 ga1.EvolvePrint(sInput);
             }
         }
-
-        //writeCsvFile(String fileName, String s)
-
     }
-
 }
