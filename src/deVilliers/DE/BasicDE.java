@@ -1,8 +1,10 @@
 package deVilliers.DE;
 
+import deVilliers.DEexp;
 import deVilliers.GA.Life;
 import deVilliers.GA.Population;
 import deVilliers.Randomness;
+import deVilliers.readCSV;
 import functions.ContinuousFunction;
 import org.apache.commons.lang3.tuple.Triple;
 import org.apache.commons.math3.util.Pair;
@@ -16,6 +18,7 @@ public class BasicDE {
     Double Range, crossoverRate, MutationRate, ScaleFactor;
     Integer PopulationSize, Generations, Dimensions;
     ContinuousFunction f;
+    String sfunction;
 
     public BasicDE(Double range, ContinuousFunction cf, Integer populationsize, Double cr, Double mr, Integer generations, Integer dimensions, Double sf) {
         this.population = new ArrayList<>();
@@ -28,6 +31,19 @@ public class BasicDE {
         Dimensions = dimensions;
         this.ScaleFactor = sf;
         this.f = cf;
+    }
+    public BasicDE(Double range, ContinuousFunction cf, Integer populationsize, Double cr, Double mr, Integer generations, Integer dimensions, Double sf, String sfunc) {
+        this.population = new ArrayList<>();
+        //this.population.addAll(new ArrayList<>(dimensions));
+        Range = range;
+        this.crossoverRate = cr;
+        MutationRate = mr;
+        PopulationSize = populationsize;
+        Generations = generations;
+        Dimensions = dimensions;
+        this.ScaleFactor = sf;
+        this.f = cf;
+        sfunction = sfunc;
     }
 
     public void Initialize()
@@ -205,7 +221,38 @@ public class BasicDE {
             igen = igen + 1;
         }
     }
+    public void differentialEvolvePrint(String sinput)
+    {
+        int igen =0;
+        readCSV rcsv = new readCSV();
 
+        while (igen <= Generations) {
+            Pair<ArrayList<Double>, Double> curMin = Collections.min(population, new sortDE());
+            Pair<ArrayList<Double>, Double> curMax = Collections.max(population, new sortDE());
+            System.out.println("Generation " + igen);
+            System.out.println("Size " + population.size());
+            System.out.println("Min : " + curMin.getSecond().toString());
+            System.out.println("Max : " + curMax.getSecond().toString());
+
+
+            try {
+                DEexp curEXP = new DEexp(curMin.getSecond(), curMax.getSecond(), sfunction, "Differential Evolution", population.size(), Generations, igen, crossoverRate, MutationRate, ScaleFactor);
+                rcsv.writeCsvFile(sinput, curEXP.print());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            createTrialPopulation();
+            population = new ArrayList<>();
+            for (Pair<ArrayList<Double>, Double> cur : trialpopulation)
+            {
+                population.add(cur);
+            }
+            igen = igen + 1;
+        }
+    }
 
 }
 class sortDE implements Comparator<Pair<ArrayList<Double>, Double>>
