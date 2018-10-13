@@ -122,11 +122,20 @@ public class Agent {
                 ", pbX=" + pbX +
                 '}';
     }
+    public String toStringPBY()
+    {
+        return "Y = " + pbY;
+    }
+
     public String curString() {
         return "Agent{" +
                 "Y=" + y +
                 ", X=" + curX +
                 '}';
+    }
+    public String curYString() {
+        return "Y=" + y;
+
     }
 
     public String veloc() {
