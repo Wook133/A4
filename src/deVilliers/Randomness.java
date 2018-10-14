@@ -15,7 +15,8 @@ public class Randomness {
      */
     public static Double UniformRandomNumber(Double Range)
     {
-        double dmax =  1.7320508071499143;
+        //double dmax =  1.7320508071499143;
+        double dmax = Math.sqrt(3.0);
         Random r = new Random();
         UniformRandomGenerator rnd = new UniformRandomGenerator(new Well19937c(r.nextInt()));
         double cur = rnd.nextNormalizedDouble();
@@ -27,7 +28,8 @@ public class Randomness {
      * */
     public static Double UniformPositiveRandomNumber(Double Range)
     {
-        double dmax =  1.7320508071499143;
+        //double dmax =  1.7320508071499143;
+        double dmax = Math.sqrt(3.0);
         Random r = new Random();
         UniformRandomGenerator rnd = new UniformRandomGenerator(new Well19937c(r.nextInt()));
         double cur = rnd.nextNormalizedDouble();
@@ -42,7 +44,8 @@ public class Randomness {
      */
     public static Integer UniformPositiveRandomInteger(Double Range)
     {
-        double dmax =  1.7320508071499143;
+        //double dmax =  1.7320508071499143;
+        double dmax = Math.sqrt(3.0);
         Random r = new Random();
         UniformRandomGenerator rnd = new UniformRandomGenerator(new Well19937c(r.nextInt()));
         double cur = rnd.nextNormalizedDouble();

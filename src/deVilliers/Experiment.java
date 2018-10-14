@@ -20,8 +20,11 @@ public class Experiment {
     Integer Generation;
     Integer curGeneration;
 
-    public Experiment(/*ArrayList<Double> xbest,*/ Double ybest,/* ArrayList<Double> XWorst,*/ Double yworst, String function, String optimizationMethod, Integer popSize, Integer generation, Integer curGeneration) {
+    Double Range;
+
+    public Experiment(/*ArrayList<Double> xbest,*/ Double ybest,/* ArrayList<Double> XWorst,*/ Double yworst, String function, String optimizationMethod, Integer popSize, Integer generation, Integer curGeneration, Double range) {
        // Xbest = xbest;
+        Range = range;
         this.ybest = ybest;
         //this.XWorst = XWorst;
         this.yworst = yworst;
@@ -42,6 +45,7 @@ public class Experiment {
                 OptimizationMethod + ", " +
                 PopSize + ", " +
                 Generation + ", " +
+                Range + ", " +
                 curGeneration;
     }
 

@@ -13,9 +13,9 @@ public class runExperiment {
 
 
     public static void main(String[] args) {
-        //RunGAExperiment("GAexperiment.csv");
-        //RunDEExperiment("DEexperiment.csv");
-        RunPSOExperiment("PSOexperiment.csv");
+        RunGAExperiment("GAexperiment100.csv");
+        RunDEExperiment("DEexperiment100.csv");
+        RunPSOExperiment("PSOexperiment100.csv");
     }
 
 
@@ -41,13 +41,13 @@ public class runExperiment {
 
         ArrayList<Double> ranges = new ArrayList<>();
         ranges.add(1.0);
-        ranges.add(10.0);
+    /*    ranges.add(10.0);
         ranges.add(100.0);
-        ranges.add(1000.0);
+        ranges.add(1000.0);*/
         for (int i = 0; i <= listFunctions.size() - 1; i++)
         {
             for (int j = 0; j <= ranges.size() - 1; j++) {
-                popControl ga1 = new popControl(ranges.get(j), listFunctions.get(i), 1000, 0.5, 0.8, 500, 30, functions.get(i));
+                popControl ga1 = new popControl(ranges.get(j), listFunctions.get(i), 100, 0.5, 0.8, 500, 30, functions.get(i));
                 ga1.InitializePopulation();
                 ga1.EvolvePrint(sInput);
             }
@@ -73,13 +73,13 @@ public class runExperiment {
 
         ArrayList<Double> ranges = new ArrayList<>();
         ranges.add(1.0);
-        ranges.add(10.0);
+     /*   ranges.add(10.0);
         ranges.add(100.0);
-        ranges.add(1000.0);
+        ranges.add(1000.0);*/
         for (int i = 0; i <= listFunctions.size() - 1; i++)
         {
             for (int j = 0; j <= ranges.size() - 1; j++) {
-                BasicDE bde = new BasicDE(ranges.get(j), listFunctions.get(i), 1000, 0.5, 0.3, 500, 30, 0.3, functions.get(i));
+                BasicDE bde = new BasicDE(ranges.get(j), listFunctions.get(i), 100, 0.5, 0.3, 500, 30, 0.3, functions.get(i));
                 bde.Initialize();
                 bde.differentialEvolvePrint(sInput);
             }
@@ -104,13 +104,13 @@ public class runExperiment {
 
         ArrayList<Double> ranges = new ArrayList<>();
         ranges.add(1.0);
-        ranges.add(10.0);
+      /*  ranges.add(10.0);
         ranges.add(100.0);
-        ranges.add(1000.0);
+        ranges.add(1000.0);*/
         for (int i = 0; i <= listFunctions.size() - 1; i++)
         {
             for (int j = 0; j <= ranges.size() - 1; j++) {
-                AgentPopulation aPSO = new AgentPopulation(ranges.get(j), 30, 1000, 500, listFunctions.get(i), 0.3, 0.6, 0.4, functions.get(i));
+                AgentPopulation aPSO = new AgentPopulation(ranges.get(j), 30, 100, 500, listFunctions.get(i), 0.3, 0.6, 0.4, functions.get(i));
                 aPSO.SwarmPrint(sInput);
             }
         }

@@ -3,8 +3,8 @@ package deVilliers;
 public class DEexp extends GAexp {
     Double scalefactor;
 
-    public DEexp(Double ybest, Double yworst, String function, String optimizationMethod, Integer popSize, Integer generation, Integer curGeneration, Double cr, Double mr, Double sf) {
-        super(ybest, yworst, function, optimizationMethod, popSize, generation, curGeneration, cr, mr);
+    public DEexp(Double ybest, Double yworst, String function, String optimizationMethod, Integer popSize, Integer generation, Integer curGeneration, Double cr, Double mr, Double sf, Double range) {
+        super(ybest, yworst, function, optimizationMethod, popSize, generation, curGeneration, cr, mr, range);
         scalefactor = sf;
     }
     @Override
@@ -20,6 +20,7 @@ public class DEexp extends GAexp {
                         CR + ", " +
                         MR + ", " +
                         scalefactor + ", " +
+                        Range + ", " +
                         curGeneration;
     }
 }

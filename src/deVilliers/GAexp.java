@@ -6,8 +6,8 @@ public class GAexp extends Experiment
 {
     Double MR;
     Double CR;
-    public GAexp(Double ybest, Double yworst, String function, String optimizationMethod, Integer popSize, Integer generation, Integer curGeneration, Double cr, Double mr) {
-        super(ybest, yworst, function, optimizationMethod, popSize, generation, curGeneration);
+    public GAexp(Double ybest, Double yworst, String function, String optimizationMethod, Integer popSize, Integer generation, Integer curGeneration, Double cr, Double mr, Double range) {
+        super(ybest, yworst, function, optimizationMethod, popSize, generation, curGeneration, range);
         MR = mr;
         CR = cr;
     }
@@ -24,6 +24,7 @@ public class GAexp extends Experiment
                         Generation + ", " +
                         CR + ", " +
                         MR + ", " +
+                        Range + ", " +
                         curGeneration;
     }
 

@@ -138,7 +138,7 @@ public class popControl {
             //BreedToPop(breeders);
             //(Double ybest, Double yworst, String function, String optimizationMethod, Integer popSize, Integer generation, Integer curGeneration, Double cr, Double mr)
             try {
-                GAexp curEXP = new GAexp(curMin.y, curMax.y, sfunction, "Genetic Algorithm", population.size(), Generations, igen, crossoverRate, MutationRate);
+                GAexp curEXP = new GAexp(curMin.y, curMax.y, sfunction, "Genetic Algorithm", population.size(), Generations, igen, crossoverRate, MutationRate, Range);
                 rcsv.writeCsvFile(sinput, curEXP.print());
             }
             catch (Exception e)
@@ -169,7 +169,7 @@ public class popControl {
                     if (curMR >= MutationRate)
                     {
 
-                        Double c = B.X.get(i) + (r.UniformRandomNumber(1.0) * A.X.get(i));
+                        Double c = B.X.get(i) + (r.NormalRandomNumber(1.0) * A.X.get(i));
                         temp.set(i, c);
                     }
                     else
@@ -182,7 +182,7 @@ public class popControl {
                     Double curMR = r.UniformPositiveRandomNumber(1.0);
                     if (curMR >= MutationRate)
                     {
-                        Double c = A.X.get(i) + (r.UniformRandomNumber(1.0) * A.X.get(i));
+                        Double c = A.X.get(i) + (r.NormalRandomNumber(1.0) * A.X.get(i));
                         temp.set(i, c);
                     }
                     else

@@ -236,7 +236,7 @@ public class BasicDE {
 
 
             try {
-                DEexp curEXP = new DEexp(curMin.getSecond(), curMax.getSecond(), sfunction, "Differential Evolution", population.size(), Generations, igen, crossoverRate, MutationRate, ScaleFactor);
+                DEexp curEXP = new DEexp(curMin.getSecond(), curMax.getSecond(), sfunction, "Differential Evolution", population.size(), Generations, igen, crossoverRate, MutationRate, ScaleFactor, Range);
                 rcsv.writeCsvFile(sinput, curEXP.print());
             }
             catch (Exception e)

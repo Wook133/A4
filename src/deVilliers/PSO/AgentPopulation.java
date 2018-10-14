@@ -94,18 +94,18 @@ public class AgentPopulation {
             }
             population.clear();
             population.addAll(nextPop);
-            Agent curBest = Collections.min(population, new sortCurBest());
+            Agent curBest = Collections.min(population, new sortAgentPB());
             System.out.println("Generation's Best");
             System.out.println(curBest.toStringPBY());
           //  System.out.println(curBest.veloc());
 
-            Agent curWorst = Collections.max(population, new sortCurBest());
+            Agent curWorst = Collections.max(population, new sortAgentPB());
             System.out.println("Generation's Worst");
             System.out.println(curWorst.curYString());
            /* System.out.println(curWorst.veloc());*/
             try {
                 ////public PSOexp(Double ybest, Double yworst, String function, String optimizationMethod, Integer popSize, Integer generation, Integer curGeneration, Double inertia, Double c1, Double c2)
-                PSOexp curEXP = new PSOexp(globalBest.y, curWorst.y, sfunction, "Particle Swarm Optimization", population.size(), Generations, i, InertiaW, c1, c2);
+                PSOexp curEXP = new PSOexp(globalBest.pbY, curWorst.pbY, sfunction, "Particle Swarm Optimization", population.size(), Generations, i, InertiaW, c1, c2, Range);
                 rcsv.writeCsvFile(sinput, curEXP.print());
             }
             catch (Exception e)
